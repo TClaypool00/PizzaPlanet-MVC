@@ -1,7 +1,10 @@
-﻿namespace PizzaPlanet.App.App_Code.BOL
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PizzaPlanet.App.App_Code.BOL
 {
     public class Inventory
     {
+        [Key]
         public int InventoryId { get; set; }
 
         public int StartingQuantity { get; set; }
