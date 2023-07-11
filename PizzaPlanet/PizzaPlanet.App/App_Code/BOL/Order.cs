@@ -14,5 +14,7 @@ namespace PizzaPlanet.App.App_Code.BOL
 
         public int UserId { get; set; }
         public User User { get; set; }
+
+        public List<OrderItem> OrderItems { get; set; }
     }
 }

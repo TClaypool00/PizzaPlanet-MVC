@@ -30,5 +30,6 @@ namespace PizzaPlanet.App.App_Code.BOL
 
         public bool IsAdmin { get; set; }
 
+        public List<Order> Orders { get; set; }
     }
 }
