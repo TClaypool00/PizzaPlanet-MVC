@@ -11,5 +11,8 @@ namespace PizzaPlanet.App.App_Code.BOL
 
         public int FoodId { get; set; }
         public Food Food { get; set; }
+
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
     }
 }
