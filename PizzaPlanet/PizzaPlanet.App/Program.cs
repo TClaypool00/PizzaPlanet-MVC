@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using PizzaPlanet.App;
+using PizzaPlanet.App.App_Code.BOL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<PizzaPlanetDbContext>(options => options.UseMySql(SecretConfig.ConnectionString, new MySqlServerVersion(SecretConfig.Version)));
 
 var app = builder.Build();
 
