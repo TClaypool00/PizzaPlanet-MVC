@@ -7,7 +7,7 @@
 <hr />
 <div class="row">
     <div  class="col-md-4">
-        <form formaction="post" asp-action="Register">
+        <form method="post">
             <div class="form-group">
                 <input asp-for="FirstName" class="form-control" placeholder="@Html.DisplayNameFor(m => m.FirstName)" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -39,8 +39,10 @@
             </div>
 
             <div class="fom-group">
-                <button type="submit" class="btn btn-primary">@ViewData["Title"]</button>
+                <input type="submit" class="btn btn-primary" value="@ViewData["Title"]" />
             </div>
-        </form>
+
+            <p>Alread have an account? Login <a asp-controller="Account" asp-action="Login">here</a>!</p>
+        </form>        
     </div>
 </div>
