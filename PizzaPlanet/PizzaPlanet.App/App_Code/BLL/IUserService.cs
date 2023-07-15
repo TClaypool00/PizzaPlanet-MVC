@@ -6,8 +6,10 @@ namespace PizzaPlanet.App.App_Code.BLL
     {
         public Task<bool> CreateUserAsync(CoreUser user);
 
-        public Task<bool> EamilExists(string email, int? id = null);
+        public Task<bool> EmailExistsAsync(string email, int? id = null);
 
-        public Task<bool> PhoneNumberExists(string phoneNumber, int? id = null);
+        public Task<bool> PhoneNumberExistsAsync(string phoneNumber, int? id = null);
+
+        public Task<CoreUser> GetUserByEmailAsync(string email);
     }
 }

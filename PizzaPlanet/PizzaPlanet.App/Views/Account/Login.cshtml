@@ -1,0 +1,28 @@
+﻿@model PizzaPlanet.App.App_Code.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form formaction="post" asp-action="Login">
+            <div class="form-group">
+                <input asp-for="Email" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Email)" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="Password" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Password)" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="fom-group">
+                <button type="submit" class="btn btn-primary">@ViewData["Title"]</button>
+            </div>
+        </form>
+
+        <p>Don't have an account? Create one <a asp-controller="Account" asp-action="Register">here</a>!</p>
+    </div>
+</div>

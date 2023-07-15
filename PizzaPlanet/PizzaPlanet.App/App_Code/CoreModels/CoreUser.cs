@@ -6,6 +6,7 @@ namespace PizzaPlanet.App.App_Code.CoreModels
     public class CoreUser
     {
         private RegisterViewModel _registerViewModel;
+        private User _user;
 
         public CoreUser()
         {
@@ -14,13 +15,35 @@ namespace PizzaPlanet.App.App_Code.CoreModels
 
         public CoreUser(RegisterViewModel registerViewModel)
         {
-            _registerViewModel = registerViewModel;
+            if (registerViewModel is null)
+            {
+                throw new ArgumentNullException(nameof(registerViewModel));
+            }
+
+            _registerViewModel = registerViewModel;            
 
             FirstName = registerViewModel.FirstName;
             LastName = registerViewModel.LastName;
             Email = registerViewModel.Email;
             Password = registerViewModel.Password;
             PhoneNumber = registerViewModel.PhoneNumber;
+        }
+
+        public CoreUser(User user)
+        {
+            if (user is null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _user = user;
+
+            FirstName = _user.FirstName;
+            LastName = _user.LastName;
+            Email = _user.Email;
+            PhoneNumber = _user.PhoneNumber;
+            Email = _user.Email;
+            Password = _user.Password;
         }
 
         public int UserId { get; set; }

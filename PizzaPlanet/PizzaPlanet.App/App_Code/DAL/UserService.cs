@@ -32,7 +32,7 @@ namespace PizzaPlanet.App.App_Code.DAL
             }
         }
 
-        public Task<bool> EamilExists(string email, int? id = null)
+        public Task<bool> EmailExistsAsync(string email, int? id = null)
         {
             if (id is null)
             {
@@ -42,7 +42,14 @@ namespace PizzaPlanet.App.App_Code.DAL
             return _context.Users.AnyAsync(u => u.Email == email && u.UserId != id);
         }
 
-        public Task<bool> PhoneNumberExists(string phoneNumber, int? id = null)
+        public async Task<CoreUser> GetUserByEmailAsync(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            return new CoreUser(user);
+        }
+
+        public Task<bool> PhoneNumberExistsAsync(string phoneNumber, int? id = null)
         {
             if (id is null)
             {
