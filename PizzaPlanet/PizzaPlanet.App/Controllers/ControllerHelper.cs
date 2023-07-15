@@ -36,5 +36,12 @@ namespace PizzaPlanet.App.Controllers
 
             return View(model);
         }
+
+        protected ActionResult SetError(Exception exception, object model)
+        {
+            ViewBag.error = exception.Message;
+
+            return View(model);
+        }
     }
 }
