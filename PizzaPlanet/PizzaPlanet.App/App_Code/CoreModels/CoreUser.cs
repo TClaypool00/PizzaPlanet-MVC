@@ -44,6 +44,7 @@ namespace PizzaPlanet.App.App_Code.CoreModels
             PhoneNumber = _user.PhoneNumber;
             Email = _user.Email;
             Password = _user.Password;
+            IsAdmin = _user.IsAdmin;
         }
 
         public int UserId { get; set; }
