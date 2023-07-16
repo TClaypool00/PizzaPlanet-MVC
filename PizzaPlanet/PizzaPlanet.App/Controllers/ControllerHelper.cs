@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace PizzaPlanet.App.Controllers
 {
@@ -42,6 +43,27 @@ namespace PizzaPlanet.App.Controllers
             ViewBag.error = exception.Message;
 
             return View(model);
+        }
+
+        protected List<string> DisplayErrors()
+        {
+            var errorList = new List<string>();
+
+            var errors = ModelState.Select(x => x.Value.Errors)
+                .Where(y => y.Count > 0)
+                .ToList();
+
+            for (int i = 0; i < errors.Count; i++)
+            {
+                var errorCollection = errors[i];
+
+                for (int j = 0; j < errorCollection.Count; j++)
+                {
+                    errorList.Add(errorCollection[j].ErrorMessage);
+                }
+            }
+
+            return errorList;
         }
     }
 }
