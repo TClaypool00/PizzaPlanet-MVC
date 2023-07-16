@@ -1,0 +1,145 @@
+﻿@model List<PizzaPlanet.App.App_Code.ViewModels.FoodViewModel>
+@{
+    ViewData["Title"] = "Foods";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@{
+    <div class="row">
+        <div class="col-md-8">
+            <button type="button" id="btnOpenFoodModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#foodModal">Create a food</button>
+        </div>
+
+        <div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="foodModal">Create a food</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form formaction="post" id="createFoodForm">
+                            <input type="text" class="form-control" id="txtFoodDescription" placeholder="Food Description" />
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="btnAddFood" type="button" class="btn btn-primary">Add food</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="foodTableBody">
+                        @{
+                            if (Model.Count > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">@item.FoodId</th>
+                                        <td>@item.FoodDescription</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="2">No foods found</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script>
+        const btnAddFood = document.getElementById('btnAddFood');
+        const txtFoodDescription = document.getElementById('txtFoodDescription');
+        const createFoodForm = document.getElementById('createFoodForm');
+        const foodTableBody = document.getElementById('foodTableBody')
+        const tableRow = foodTableBody.getElementsByTagName('tr')[0]
+        const elementsInRow = tableRow.getElementsByTagName('*');
+        const successMessage = document.getElementById('success');
+        const errorMessage = document.getElementById('error');
+        const btnOpenFoodModal = document.getElementById('btnOpenFoodModal');
+
+        btnOpenFoodModal.addEventListener('click', function() {
+            txtFoodDescription.focus();
+        })
+
+        btnAddFood.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            txtFoodDescription.focus();
+
+            let data = {
+                FoodDescription: txtFoodDescription.value                
+            }
+
+            data = JSON.stringify(data);
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create", "Foods")',
+                data: data,
+                contentType: 'application/json',
+                success: function (data) {
+                    const foodIdTableData = document.createElement('th');
+                    const foodDescTableData = document.createElement('td');
+                    const newFoodTableRow = document.createElement('tr');
+
+                    foodIdTableData.scope = 'row';
+                    foodIdTableData.innerHTML = data.foodId;
+                    foodDescTableData.innerHTML = data.foodDescription;
+
+                    //No foods
+                    if (elementsInRow.length == 1) {
+
+                        tableRow.innerHTML = '';
+
+                        tableRow.appendChild(foodIdTableData)
+                        tableRow.appendChild(foodDescTableData)
+                    } else {
+                        foodTableBody.appendChild(newFoodTableRow);
+                        newFoodTableRow.appendChild(foodIdTableData)
+                        newFoodTableRow.appendChild(foodDescTableData)
+                    }
+
+                    txtFoodDescription.value = ''
+                    $('#foodModal').modal('hide');
+
+                    if (errorMessage.innerHTML != '') {
+                        errorMessage.innerHTML = '';
+                    }
+
+                    successMessage.innerHTML = 'Food added!';
+                },
+                error: function (err) {
+                    console.log(err);
+
+                    if (successMessage.innerHTML != '') {
+                        successMessage.innerHTML = '';                        
+                    }
+
+                    $('#foodModal').modal('hide');
+                    errorMessage.innerHTML = err.responseText;
+                }
+            })
+        })
+    </script>
+}

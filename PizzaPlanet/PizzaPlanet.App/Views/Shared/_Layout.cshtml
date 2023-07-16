@@ -24,7 +24,14 @@
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                </li>                                
+                                </li>
+
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Foods" asp-action="Index">Foods</a>
+                                    </li>
+                                }
                             }
                             else
                             {

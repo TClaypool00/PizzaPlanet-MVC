@@ -13,6 +13,7 @@ builder.Services.AddControllersWithViews();
 //Services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<IFoodService, FoodService>();
 
 builder.Services.AddDbContext<PizzaPlanetDbContext>(options => options.UseMySql(SecretConfig.ConnectionString, new MySqlServerVersion(SecretConfig.Version)));
 
